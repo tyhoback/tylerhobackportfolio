@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tyler Hoback — UX Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Syne:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,8 +17,22 @@
       --surface: #fafaf8;
       --border: #e8e7e3;
       --accent: #1a1a1a;
-      --serif: 'DM Serif Display', Georgia, serif;
-      --sans: 'DM Sans', system-ui, sans-serif;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Syne', system-ui, sans-serif;
+      --nav-bg: rgba(250, 250, 248, 0.9);
+      --image-gradient: linear-gradient(135deg, #e8e7e3 0%, #d4d3ce 100%);
+    }
+
+    [data-theme="dark"] {
+      --ink: #e8e7e3;
+      --ink-muted: #7a7975;
+      --ink-faint: #3d3d3b;
+      --surface: #141413;
+      --border: #252523;
+      --accent: #e8e7e3;
+      --nav-bg: rgba(20, 20, 19, 0.92);
+      --image-gradient: linear-gradient(135deg, #1e1e1c 0%, #252523 100%);
+      color-scheme: dark;
     }
 
     html { scroll-behavior: smooth; }
@@ -30,6 +44,7 @@
       font-size: 16px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     /* NAV */
@@ -41,8 +56,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.25rem 3rem;
-      background: rgba(250, 250, 248, 0.9);
-      backdrop-filter: blur(12px);
+      background: transparent;
       border-bottom: 1px solid transparent;
       transition: border-color 0.3s;
     }
@@ -51,9 +65,9 @@
     .nav-logo {
       font-family: var(--serif);
       font-size: 1.1rem;
-      color: var(--ink);
       text-decoration: none;
       letter-spacing: 0.01em;
+      color: var(--ink);
     }
 
     .nav-links {
@@ -70,7 +84,7 @@
       letter-spacing: 0.02em;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover { color: #E879F9; }
 
     /* SECTIONS */
     section {
@@ -82,15 +96,134 @@
     /* HERO */
     #hero {
       min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      background: #0D0520;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    /* Far layer — blurry, dimmer, smaller blobs */
+    .lava-far {
+      position: absolute;
+      inset: 0;
+      filter: url(#goo-far) blur(5px);
+      opacity: 0.6;
+    }
+
+    /* Close layer — sharp, vivid, larger blobs */
+    .lava-close {
+      position: absolute;
+      inset: 0;
+      filter: url(#goo-close) blur(1px);
+    }
+
+    .blob {
+      position: absolute;
+      bottom: -350px;
+      border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+    }
+
+    /* Bottom heat glow — warm orange/yellow like the lamp base */
+    .lava-glow {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 35%;
+      background: radial-gradient(ellipse at 50% 100%, #FF8C00 0%, #FF4500 20%, #CC1060 45%, transparent 70%);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    /* Far blobs — smaller, darker pink, feel deep in the lamp */
+    .bf1 { width: 150px; height: 110px; background: #CC0055; left: 12%; animation: lava-a 17s ease-in-out infinite 0s,   morph-a 9s  ease-in-out infinite; }
+    .bf2 { width: 110px; height: 130px; background: #BB0060; left: 42%; animation: lava-b 22s ease-in-out infinite -6s,  morph-b 11s ease-in-out infinite; }
+    .bf3 { width: 160px; height: 105px; background: #CC0055; left: 63%; animation: lava-c 15s ease-in-out infinite -11s, morph-c 8s  ease-in-out infinite; }
+    .bf4 { width: 120px; height: 145px; background: #BB0060; left: 80%; animation: lava-d 19s ease-in-out infinite -3s,  morph-a 10s ease-in-out infinite 2s; }
+    .bf5 { width: 140px; height: 100px; background: #CC0055; left: 28%; animation: lava-e 14s ease-in-out infinite -8s,  morph-b 7s  ease-in-out infinite 1s; }
+
+    /* Close blobs — larger, vivid hot pink/magenta */
+    .bc1 { width: 280px; height: 200px; background: #FF1A6B; left: 5%;  animation: lava-c 16s ease-in-out infinite -4s,  morph-b 10s ease-in-out infinite; }
+    .bc2 { width: 220px; height: 270px; background: #F0006A; left: 34%; animation: lava-a 20s ease-in-out infinite -9s,  morph-c 12s ease-in-out infinite; }
+    .bc3 { width: 300px; height: 190px; background: #FF2D78; left: 54%; animation: lava-e 18s ease-in-out infinite -2s,  morph-a 9s  ease-in-out infinite 3s; }
+    .bc4 { width: 200px; height: 255px; background: #FF1A6B; left: 74%; animation: lava-b 23s ease-in-out infinite -14s, morph-b 11s ease-in-out infinite 1s; }
+    .bc5 { width: 260px; height: 180px; background: #F0006A; left: 20%; animation: lava-d 15s ease-in-out infinite -7s,  morph-c 8s  ease-in-out infinite 2s; }
+
+    /* Float paths — travel well past the top of the viewport */
+    @keyframes lava-a {
+      0%   { transform: translateY(0)       translateX(0px); }
+      20%  { transform: translateY(-25vh)   translateX(30px); }
+      45%  { transform: translateY(-60vh)   translateX(-20px); }
+      70%  { transform: translateY(-95vh)   translateX(25px); }
+      100% { transform: translateY(-160vh)  translateX(8px); }
+    }
+    @keyframes lava-b {
+      0%   { transform: translateY(0)       translateX(0px); }
+      15%  { transform: translateY(-20vh)   translateX(-35px); }
+      40%  { transform: translateY(-52vh)   translateX(22px); }
+      68%  { transform: translateY(-88vh)   translateX(-30px); }
+      100% { transform: translateY(-165vh)  translateX(12px); }
+    }
+    @keyframes lava-c {
+      0%   { transform: translateY(0)       translateX(0px); }
+      25%  { transform: translateY(-30vh)   translateX(20px); }
+      55%  { transform: translateY(-65vh)   translateX(-25px); }
+      80%  { transform: translateY(-100vh)  translateX(28px); }
+      100% { transform: translateY(-158vh)  translateX(-10px); }
+    }
+    @keyframes lava-d {
+      0%   { transform: translateY(0)       translateX(0px); }
+      30%  { transform: translateY(-35vh)   translateX(-26px); }
+      58%  { transform: translateY(-70vh)   translateX(35px); }
+      85%  { transform: translateY(-105vh)  translateX(-20px); }
+      100% { transform: translateY(-162vh)  translateX(14px); }
+    }
+    @keyframes lava-e {
+      0%   { transform: translateY(0)       translateX(0px); }
+      22%  { transform: translateY(-28vh)   translateX(40px); }
+      50%  { transform: translateY(-62vh)   translateX(-30px); }
+      78%  { transform: translateY(-98vh)   translateX(20px); }
+      100% { transform: translateY(-160vh)  translateX(-8px); }
+    }
+
+    @keyframes morph-a {
+      0%, 100% { border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%; }
+      25%      { border-radius: 70% 30% 46% 54% / 30% 70% 30% 70%; }
+      50%      { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+      75%      { border-radius: 54% 46% 38% 62% / 63% 32% 68% 37%; }
+    }
+    @keyframes morph-b {
+      0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+      33%      { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+      66%      { border-radius: 70% 30% 50% 50% / 30% 40% 70% 60%; }
+    }
+    @keyframes morph-c {
+      0%, 100% { border-radius: 50% 50% 70% 30% / 50% 70% 30% 50%; }
+      33%      { border-radius: 38% 62% 45% 55% / 65% 35% 65% 35%; }
+      66%      { border-radius: 62% 38% 55% 45% / 40% 60% 40% 60%; }
+    }
+
+    .glass-overlay {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(60px);
+      -webkit-backdrop-filter: blur(60px);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding-bottom: 6rem;
-      padding-top: 6rem;
+      min-height: 100vh;
+      padding: 6rem 3rem;
       max-width: 960px;
       margin: 0 auto;
-      padding-left: 3rem;
-      padding-right: 3rem;
     }
 
     .hero-eyebrow {
@@ -98,7 +231,7 @@
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--ink-faint);
+      color: rgba(240, 239, 235, 0.4);
       margin-bottom: 1.5rem;
       opacity: 0;
       transform: translateY(12px);
@@ -110,7 +243,7 @@
       font-size: clamp(3.5rem, 8vw, 6.5rem);
       line-height: 1.0;
       letter-spacing: -0.02em;
-      color: var(--ink);
+      color: #f0efeb;
       margin-bottom: 1.5rem;
       opacity: 0;
       transform: translateY(12px);
@@ -119,37 +252,18 @@
 
     .hero-name em {
       font-style: italic;
-      color: var(--ink-muted);
+      color: rgba(240, 239, 235, 0.45);
     }
 
     .hero-desc {
       font-size: 1.1rem;
       font-weight: 300;
-      color: var(--ink-muted);
+      color: rgba(240, 239, 235, 0.5);
       max-width: 480px;
       line-height: 1.7;
       opacity: 0;
       transform: translateY(12px);
       animation: fadeUp 0.7s 0.35s forwards;
-    }
-
-    .hero-scroll {
-      margin-top: 4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      opacity: 0;
-      animation: fadeUp 0.7s 0.55s forwards;
-    }
-
-    .hero-scroll-line {
-      width: 40px;
-      height: 1px;
-      background: var(--ink-faint);
     }
 
     @keyframes fadeUp {
@@ -170,8 +284,8 @@
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--ink-faint);
       min-width: 2ch;
+      color: #C084FC;
     }
 
     .section-title {
@@ -184,7 +298,7 @@
     /* DIVIDER */
     .divider {
       height: 1px;
-      background: var(--border);
+      background: linear-gradient(90deg, transparent, #7C3AED, #FF2D78, transparent);
       margin-bottom: 3rem;
     }
 
@@ -221,7 +335,7 @@
     .case-study-image-inner {
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #e8e7e3 0%, #d4d3ce 100%);
+      background: var(--image-gradient);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -251,8 +365,9 @@
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--ink-faint);
-      border: 1px solid var(--border);
+      color: #C084FC;
+      border: 1px solid #3d1a5e;
+      background: rgba(124, 58, 237, 0.08);
       padding: 3px 10px;
       border-radius: 100px;
     }
@@ -278,10 +393,11 @@
       font-size: 0.8rem;
       font-weight: 500;
       letter-spacing: 0.04em;
-      color: var(--ink);
+      color: #FF2D78;
       margin-top: 0.5rem;
-      transition: gap 0.2s;
+      transition: gap 0.2s, color 0.2s;
     }
+    .case-study-link:hover { color: #E879F9; }
 
     .case-study:hover .case-study-link { gap: 0.75rem; }
 
@@ -328,8 +444,9 @@
 
     .skills-list li {
       font-size: 0.8rem;
-      color: var(--ink-muted);
-      background: var(--border);
+      color: #C084FC;
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid #3d1a5e;
       padding: 4px 10px;
       border-radius: 4px;
     }
@@ -355,7 +472,7 @@
       max-width: 14ch;
     }
 
-    .contact-heading em { font-style: italic; color: var(--ink-muted); }
+    .contact-heading em { font-style: italic; color: #FF2D78; }
 
     .contact-links {
       display: flex;
@@ -375,7 +492,7 @@
       transition: color 0.2s;
     }
 
-    .contact-link:hover { color: var(--ink); }
+    .contact-link:hover { color: #E879F9; }
 
     /* FOOTER */
     footer {
@@ -437,15 +554,15 @@
       font-size: 0.8rem;
       font-weight: 500;
       letter-spacing: 0.04em;
-      color: var(--surface);
-      background: var(--ink);
+      color: #fff;
+      background: linear-gradient(135deg, #FF2D78, #7C3AED);
       border: none;
       padding: 0.75rem 1.25rem;
       cursor: pointer;
       transition: opacity 0.2s;
     }
 
-    .work-gate-btn:hover { opacity: 0.75; }
+    .work-gate-btn:hover { opacity: 0.8; }
 
     .work-gate-error {
       font-size: 0.8rem;
@@ -460,8 +577,7 @@
     /* RESPONSIVE */
     @media (max-width: 700px) {
       nav { padding: 1rem 1.5rem; }
-      #hero, section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-      #hero { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .hero-content, section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
       .case-study { grid-template-columns: 1fr; gap: 1.5rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
       .contact-inner { flex-direction: column; align-items: flex-start; }
@@ -471,6 +587,21 @@
   </style>
 </head>
 <body>
+
+  <svg style="position:absolute;width:0;height:0" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Close layer: sharper edges, tighter goo -->
+      <filter id="goo-close" x="-20%" y="-150%" width="140%" height="400%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10"/>
+      </filter>
+      <!-- Far layer: heavy blur, softer merge threshold -->
+      <filter id="goo-far" x="-20%" y="-150%" width="140%" height="400%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="22" result="blur"/>
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 16 -6"/>
+      </filter>
+    </defs>
+  </svg>
 
   <nav id="nav">
     <a href="#hero" class="nav-logo">Tyler Hoback</a>
@@ -483,9 +614,29 @@
 
   <!-- HERO -->
   <div id="hero">
-    <p class="hero-eyebrow">UX Designer — Seattle, WA</p>
-    <h1 class="hero-name">Designing<br><em>with</em> intent.</h1>
-    <p class="hero-desc">I craft digital experiences that are clear, considered, and built to last. Currently open to new opportunities.</p>
+    <div class="hero-bg">
+      <div class="lava-glow"></div>
+      <div class="lava-far">
+        <div class="blob bf1"></div>
+        <div class="blob bf2"></div>
+        <div class="blob bf3"></div>
+        <div class="blob bf4"></div>
+        <div class="blob bf5"></div>
+      </div>
+      <div class="lava-close">
+        <div class="blob bc1"></div>
+        <div class="blob bc2"></div>
+        <div class="blob bc3"></div>
+        <div class="blob bc4"></div>
+        <div class="blob bc5"></div>
+      </div>
+      <div class="glass-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">UX Designer — Seattle, WA</p>
+      <h1 class="hero-name">Designing<br><em>with</em> intent.</h1>
+      <p class="hero-desc">I craft digital experiences that are clear, considered, and built to last. Currently open to new opportunities.</p>
+    </div>
   </div>
 
   <!-- WORK -->
@@ -540,7 +691,7 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="section-header">
-      <span class="section-label">01</span>
+      <span class="section-label">02</span>
       <h2 class="section-title">About</h2>
     </div>
     <div class="divider"></div>
@@ -581,8 +732,8 @@
     <div class="contact-inner">
       <h2 class="contact-heading">Let's work <em>together.</em></h2>
       <div class="contact-links">
-        <a href="mailto:hello@tylerhoback.com" class="contact-link">
-          hello@tylerhoback.com →
+        <a href="mailto:tylerhoback@gmail.com" class="contact-link">
+          tylerhoback@gmail.com →
         </a>
         <a href="https://www.linkedin.com/in/tylerhoback/" class="contact-link" target="_blank">
           LinkedIn →
@@ -631,6 +782,99 @@
         }
       });
     })();
+
+    // WIZARD (hidden)
+    /*
+    (function () {
+      const wiz = document.createElement('div');
+      wiz.id = 'wizard';
+      wiz.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 44" width="64" height="88">
+        <rect x="2" y="6" width="2" height="30" fill="#92400E" rx="1"/>
+        <circle cx="3" cy="6" r="4" fill="#9333EA" opacity="0.85"/>
+        <circle cx="3" cy="6" r="2" fill="#E879F9"/>
+        <polygon points="20,0 14,10 26,10" fill="#6B21A8"/>
+        <rect x="12" y="10" width="16" height="3" fill="#7C3AED" rx="1"/>
+        <polygon points="20,2 21,6 19,6" fill="#F59E0B"/>
+        <rect x="13" y="13" width="13" height="9" fill="#FDE68A" rx="1"/>
+        <rect x="15" y="15" width="2" height="2" fill="#1a0535"/>
+        <rect x="22" y="15" width="2" height="2" fill="#1a0535"/>
+        <rect x="15" y="14" width="2" height="1" fill="#7a4a00"/>
+        <rect x="22" y="14" width="2" height="1" fill="#7a4a00"/>
+        <rect x="19" y="17" width="2" height="2" fill="#f0c070"/>
+        <rect x="15" y="20" width="9" height="3" fill="#c8c8c8" rx="1"/>
+        <rect x="4" y="24" width="9" height="2" fill="#FDE68A" rx="1"/>
+        <rect x="12" y="22" width="15" height="13" fill="#6B21A8" rx="2"/>
+        <rect x="12" y="30" width="15" height="2" fill="#7C3AED"/>
+        <g class="wiz-leg-l">
+          <rect x="13" y="35" width="5" height="7" fill="#5B21B6" rx="1"/>
+          <rect x="12" y="41" width="7" height="2" fill="#0a0515" rx="1"/>
+        </g>
+        <g class="wiz-leg-r">
+          <rect x="21" y="35" width="5" height="7" fill="#5B21B6" rx="1"/>
+          <rect x="20" y="41" width="7" height="2" fill="#0a0515" rx="1"/>
+        </g>
+      </svg>`;
+      document.body.appendChild(wiz);
+
+      const COLORS = ['#E879F9','#C084FC','#FF2D78','#F59E0B','#FF8C00','#7C3AED'];
+      const SPEED  = 115; // px/sec
+      let x = -70, state = 'waiting', waitUntil = Date.now() + 1000;
+      let nextSpecialX = 0, lastTs = null;
+
+      function reset() {
+        x = -70; wiz.style.left = x + 'px';
+        wiz.className = '';
+        state = 'waiting';
+        waitUntil = Date.now() + 3500 + Math.random() * 5000;
+      }
+
+      function spellBurst() {
+        for (let i = 0; i < 12; i++) {
+          const p = document.createElement('div');
+          p.className = 'spell-particle';
+          const sz  = 4 + Math.random() * 7;
+          const ang = (i / 12) * Math.PI * 2 + Math.random() * 0.4;
+          const d   = 35 + Math.random() * 55;
+          p.style.cssText = `width:${sz}px;height:${sz}px;left:${x+8}px;bottom:${50+Math.random()*40}px;` +
+            `background:${COLORS[i%COLORS.length]};` +
+            `--dx:${(Math.cos(ang)*d).toFixed(1)}px;--dy:${(-Math.abs(Math.sin(ang)*d)-8).toFixed(1)}px`;
+          document.body.appendChild(p);
+          setTimeout(() => p.remove(), 660);
+        }
+      }
+
+      function doSpecial() {
+        const moves = ['wiz-flip','wiz-spin','wiz-cast'];
+        const move  = moves[Math.floor(Math.random() * moves.length)];
+        const dur   = move === 'wiz-cast' ? 950 : move === 'wiz-flip' ? 730 : 640;
+        wiz.className = move;
+        state = 'special';
+        if (move === 'wiz-cast') spellBurst();
+        setTimeout(() => { wiz.className = 'running'; state = 'running'; }, dur);
+      }
+
+      function loop(ts) {
+        if (!lastTs) lastTs = ts;
+        const dt = Math.min((ts - lastTs) / 1000, 0.05);
+        lastTs = ts;
+
+        if (state === 'waiting' && Date.now() >= waitUntil) {
+          state = 'running';
+          wiz.className = 'running';
+          nextSpecialX = window.innerWidth * (0.2 + Math.random() * 0.5);
+        } else if (state === 'running') {
+          x += SPEED * dt;
+          wiz.style.left = x + 'px';
+          if (x >= nextSpecialX && nextSpecialX > 0) { nextSpecialX = 0; doSpecial(); }
+          if (x > window.innerWidth + 70) reset();
+        }
+        requestAnimationFrame(loop);
+      }
+
+      wiz.style.left = x + 'px';
+      requestAnimationFrame(loop);
+    })();
+    */
   </script>
 
 </body>
