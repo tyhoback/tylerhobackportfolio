@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tyler Hoback — UX Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-muted: #666;
+      --ink-faint: #aaa;
+      --surface: #fafaf8;
+      --border: #e8e7e3;
+      --accent: #1a1a1a;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(250, 250, 248, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-color: var(--border); }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--ink-muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* SECTIONS */
+    section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 6rem;
+      padding-top: 6rem;
+      max-width: 960px;
+      margin: 0 auto;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.7s 0.1s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--ink-muted);
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--ink-muted);
+      max-width: 480px;
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+
+    .hero-scroll {
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      opacity: 0;
+      animation: fadeUp 0.7s 0.55s forwards;
+    }
+
+    .hero-scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--ink-faint);
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SECTION HEADER */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      padding-top: 7rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      min-width: 2ch;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 3rem;
+    }
+
+    /* CASE STUDIES */
+    .case-studies {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .case-study {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .case-study:first-child { border-top: 1px solid var(--border); }
+
+    .case-study-image {
+      aspect-ratio: 16/10;
+      background: var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .case-study-image-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #e8e7e3 0%, #d4d3ce 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-faint);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform 0.4s ease;
+    }
+
+    .case-study:hover .case-study-image-inner { transform: scale(1.03); }
+
+    .case-study-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .case-study-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .case-study-title {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    .case-study-desc {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .case-study-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      margin-top: 0.5rem;
+      transition: gap 0.2s;
+    }
+
+    .case-study:hover .case-study-link { gap: 0.75rem; }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 7rem;
+    }
+
+    .about-text {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--ink-muted);
+      line-height: 1.8;
+    }
+
+    .about-text p + p { margin-top: 1rem; }
+
+    .about-details { display: flex; flex-direction: column; gap: 2rem; }
+
+    .about-detail-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .about-detail-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .about-detail-value {
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      list-style: none;
+    }
+
+    .skills-list li {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      background: var(--border);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    /* CONTACT */
+    #contact {
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 2rem;
+    }
+
+    .contact-heading {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.05;
+      max-width: 14ch;
+    }
+
+    .contact-heading em { font-style: italic; color: var(--ink-muted); }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      text-align: right;
+    }
+
+    .contact-link {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      transition: color 0.2s;
+    }
+
+    .contact-link:hover { color: var(--ink); }
+
+    /* FOOTER */
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-text {
+      font-size: 0.75rem;
+      color: var(--ink-faint);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.5rem; }
+      #hero, section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      #hero { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .case-study { grid-template-columns: 1fr; gap: 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-inner { flex-direction: column; align-items: flex-start; }
+      .contact-links { text-align: left; }
+      .contact-link { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="#hero" class="nav-logo">Tyler Hoback</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div id="hero">
+    <p class="hero-eyebrow">UX Designer — Seattle, WA</p>
+    <h1 class="hero-name">Designing<br><em>with</em> intent.</h1>
+    <p class="hero-desc">I craft digital experiences that are clear, considered, and built to last. Currently open to new opportunities.</p>
+    <div class="hero-scroll">
+      <span class="hero-scroll-line"></span>
+      Selected work
+    </div>
+  </div>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="section-header">
+      <span class="section-label">01</span>
+      <h2 class="section-title">Case Studies</h2>
+    </div>
+    <div class="case-studies">
+
+      <a class="case-study" href="#" onclick="return false;">
+        <div class="case-study-image">
+          <div class="case-study-image-inner">Cover image</div>
+        </div>
+        <div class="case-study-meta">
+          <div class="case-study-tags">
+            <span class="tag">UX Research</span>
+            <span class="tag">Product Design</span>
+          </div>
+          <h3 class="case-study-title">Project Title One</h3>
+          <p class="case-study-desc">A brief description of the project, the problem you solved, and what impact it had. Keep this 2–3 sentences.</p>
+          <span class="case-study-link">View case study →</span>
+        </div>
+      </a>
+
+      <a class="case-study" href="#" onclick="return false;">
+        <div class="case-study-image">
+          <div class="case-study-image-inner">Cover image</div>
+        </div>
+        <div class="case-study-meta">
+          <div class="case-study-tags">
+            <span class="tag">Design Systems</span>
+            <span class="tag">Interaction Design</span>
+          </div>
+          <h3 class="case-study-title">Project Title Two</h3>
+          <p class="case-study-desc">A brief description of the project, the problem you solved, and what impact it had. Keep this 2–3 sentences.</p>
+          <span class="case-study-link">View case study →</span>
+        </div>
+      </a>
+
+      <a class="case-study" href="#" onclick="return false;">
+        <div class="case-study-image">
+          <div class="case-study-image-inner">Cover image</div>
+        </div>
+        <div class="case-study-meta">
+          <div class="case-study-tags">
+            <span class="tag">Mobile</span>
+            <span class="tag">Usability Testing</span>
+          </div>
+          <h3 class="case-study-title">Project Title Three</h3>
+          <p class="case-study-desc">A brief description of the project, the problem you solved, and what impact it had. Keep this 2–3 sentences.</p>
+          <span class="case-study-link">View case study →</span>
+        </div>
+      </a>
+
+      <a class="case-study" href="#" onclick="return false;">
+        <div class="case-study-image">
+          <div class="case-study-image-inner">Cover image</div>
+        </div>
+        <div class="case-study-meta">
+          <div class="case-study-tags">
+            <span class="tag">Web App</span>
+            <span class="tag">Prototyping</span>
+          </div>
+          <h3 class="case-study-title">Project Title Four</h3>
+          <p class="case-study-desc">A brief description of the project, the problem you solved, and what impact it had. Keep this 2–3 sentences.</p>
+          <span class="case-study-link">View case study →</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header">
+      <span class="section-label">02</span>
+      <h2 class="section-title">About</h2>
+    </div>
+    <div class="divider"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm Tyler, a UX designer based in Seattle. I focus on turning complex problems into simple, intuitive experiences — from early discovery through to polished delivery.</p>
+        <p>My work spans product design, design systems, and research. I like collaborating closely with developers and stakeholders to make sure good ideas actually ship.</p>
+        <p>When I'm not designing, I'm usually building side projects, exploring new tools, or trying to make things that feel just a little more delightful than they need to be.</p>
+      </div>
+      <div class="about-details">
+        <div class="about-detail-group">
+          <span class="about-detail-label">Based in</span>
+          <span class="about-detail-value">Seattle, Washington</span>
+        </div>
+        <div class="about-detail-group">
+          <span class="about-detail-label">Skills</span>
+          <ul class="skills-list">
+            <li>UX Research</li>
+            <li>Interaction Design</li>
+            <li>Prototyping</li>
+            <li>Design Systems</li>
+            <li>Figma</li>
+            <li>HTML & CSS</li>
+            <li>Usability Testing</li>
+          </ul>
+        </div>
+        <div class="about-detail-group">
+          <span class="about-detail-label">Resume</span>
+          <a href="resume.pdf" class="case-study-link" style="text-decoration:none;">Download PDF →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <h2 class="contact-heading">Let's work <em>together.</em></h2>
+      <div class="contact-links">
+        <a href="mailto:hello@tylerhoback.com" class="contact-link">
+          hello@tylerhoback.com →
+        </a>
+        <a href="https://linkedin.com/in/tylerhoback" class="contact-link" target="_blank">
+          LinkedIn →
+        </a>
+        <a href="https://read.cv/tylerhoback" class="contact-link" target="_blank">
+          Read.cv →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-text">© 2026 Tyler Hoback</span>
+    <span class="footer-text">UX Designer</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+  </script>
+
+</body>
+</html>
