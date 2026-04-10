@@ -392,6 +392,71 @@
       color: var(--ink-faint);
     }
 
+    /* WORK GATE */
+    #work-gate {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 0;
+      gap: 1.25rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .work-gate-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .work-gate-form {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .work-gate-input {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: var(--ink);
+      background: transparent;
+      border: none;
+      padding: 0.75rem 1rem;
+      outline: none;
+      width: 180px;
+    }
+
+    .work-gate-input::placeholder { color: var(--ink-faint); }
+
+    .work-gate-btn {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--surface);
+      background: var(--ink);
+      border: none;
+      padding: 0.75rem 1.25rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .work-gate-btn:hover { opacity: 0.75; }
+
+    .work-gate-error {
+      font-size: 0.8rem;
+      color: #b04040;
+      opacity: 0;
+      transition: opacity 0.2s;
+      min-height: 1.2em;
+    }
+
+    .work-gate-error.visible { opacity: 1; }
+
     /* RESPONSIVE */
     @media (max-width: 700px) {
       nav { padding: 1rem 1.5rem; }
@@ -421,10 +486,6 @@
     <p class="hero-eyebrow">UX Designer — Seattle, WA</p>
     <h1 class="hero-name">Designing<br><em>with</em> intent.</h1>
     <p class="hero-desc">I craft digital experiences that are clear, considered, and built to last. Currently open to new opportunities.</p>
-    <div class="hero-scroll">
-      <span class="hero-scroll-line"></span>
-      Selected work
-    </div>
   </div>
 
   <!-- WORK -->
@@ -433,64 +494,42 @@
       <span class="section-label">01</span>
       <h2 class="section-title">Case Studies</h2>
     </div>
-    <div class="case-studies">
+    <div id="work-gate">
+      <span class="work-gate-label">Password required</span>
+      <form class="work-gate-form" id="work-gate-form">
+        <input class="work-gate-input" id="work-gate-input" type="password" placeholder="Enter password" autocomplete="current-password" />
+        <button class="work-gate-btn" type="submit">Unlock →</button>
+      </form>
+      <span class="work-gate-error" id="work-gate-error">Incorrect password</span>
+    </div>
+    <div class="case-studies" id="work-content" style="display:none;">
 
-      <a class="case-study" href="#" onclick="return false;">
+      <a class="case-study" href="#">
         <div class="case-study-image">
           <div class="case-study-image-inner">Cover image</div>
         </div>
         <div class="case-study-meta">
           <div class="case-study-tags">
-            <span class="tag">UX Research</span>
+            <span class="tag">AI / Agent UX</span>
             <span class="tag">Product Design</span>
           </div>
-          <h3 class="case-study-title">Project Title One</h3>
-          <p class="case-study-desc">A brief description of the project, the problem you solved, and what impact it had. Keep this 2–3 sentences.</p>
+          <h3 class="case-study-title">Microsoft</h3>
+          <p class="case-study-desc">Designing AI-native and agent-based experiences across Power Apps and Copilot — shaping how users build, automate, and manage intelligent workflows at scale.</p>
           <span class="case-study-link">View case study →</span>
         </div>
       </a>
 
-      <a class="case-study" href="#" onclick="return false;">
+      <a class="case-study" href="#">
         <div class="case-study-image">
           <div class="case-study-image-inner">Cover image</div>
         </div>
         <div class="case-study-meta">
           <div class="case-study-tags">
+            <span class="tag">Enterprise UX</span>
             <span class="tag">Design Systems</span>
-            <span class="tag">Interaction Design</span>
           </div>
-          <h3 class="case-study-title">Project Title Two</h3>
-          <p class="case-study-desc">A brief description of the project, the problem you solved, and what impact it had. Keep this 2–3 sentences.</p>
-          <span class="case-study-link">View case study →</span>
-        </div>
-      </a>
-
-      <a class="case-study" href="#" onclick="return false;">
-        <div class="case-study-image">
-          <div class="case-study-image-inner">Cover image</div>
-        </div>
-        <div class="case-study-meta">
-          <div class="case-study-tags">
-            <span class="tag">Mobile</span>
-            <span class="tag">Usability Testing</span>
-          </div>
-          <h3 class="case-study-title">Project Title Three</h3>
-          <p class="case-study-desc">A brief description of the project, the problem you solved, and what impact it had. Keep this 2–3 sentences.</p>
-          <span class="case-study-link">View case study →</span>
-        </div>
-      </a>
-
-      <a class="case-study" href="#" onclick="return false;">
-        <div class="case-study-image">
-          <div class="case-study-image-inner">Cover image</div>
-        </div>
-        <div class="case-study-meta">
-          <div class="case-study-tags">
-            <span class="tag">Web App</span>
-            <span class="tag">Prototyping</span>
-          </div>
-          <h3 class="case-study-title">Project Title Four</h3>
-          <p class="case-study-desc">A brief description of the project, the problem you solved, and what impact it had. Keep this 2–3 sentences.</p>
+          <h3 class="case-study-title">Vistex</h3>
+          <p class="case-study-desc">Full ownership of enterprise web application design used by 100,000+ users across 70+ countries, from research through production.</p>
           <span class="case-study-link">View case study →</span>
         </div>
       </a>
@@ -501,15 +540,15 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="section-header">
-      <span class="section-label">02</span>
+      <span class="section-label">01</span>
       <h2 class="section-title">About</h2>
     </div>
     <div class="divider"></div>
     <div class="about-grid">
       <div class="about-text">
-        <p>I'm Tyler, a UX designer based in Seattle. I focus on turning complex problems into simple, intuitive experiences — from early discovery through to polished delivery.</p>
-        <p>My work spans product design, design systems, and research. I like collaborating closely with developers and stakeholders to make sure good ideas actually ship.</p>
-        <p>When I'm not designing, I'm usually building side projects, exploring new tools, or trying to make things that feel just a little more delightful than they need to be.</p>
+        <p>I'm Tyler, a product designer at Microsoft working on AI and agent experiences. What gets me out of bed is building tools that genuinely change what people can do. When something I designed makes someone's work faster or clearer or less frustrating, that's the whole point.</p>
+        <p>I care as much about product strategy as I do about the interface. I want to understand why something should exist before I figure out what it should look like. I prototype directly in code so ideas get stress tested early and nothing important gets lost between the design file and what actually ships.</p>
+        <p>Before Microsoft I spent three years at Vistex designing enterprise software used by over 100,000 people across 70 countries. These days most of my thinking is about AI and what it means to design agent behavior that feels legible and trustworthy rather than just impressive.</p>
       </div>
       <div class="about-details">
         <div class="about-detail-group">
@@ -519,18 +558,19 @@
         <div class="about-detail-group">
           <span class="about-detail-label">Skills</span>
           <ul class="skills-list">
-            <li>UX Research</li>
+            <li>AI Agent UX</li>
+            <li>Product Strategy</li>
             <li>Interaction Design</li>
-            <li>Prototyping</li>
             <li>Design Systems</li>
             <li>Figma</li>
-            <li>HTML & CSS</li>
-            <li>Usability Testing</li>
+            <li>HTML and CSS</li>
+            <li>React</li>
+            <li>Prototyping</li>
           </ul>
         </div>
         <div class="about-detail-group">
           <span class="about-detail-label">Resume</span>
-          <a href="resume.pdf" class="case-study-link" style="text-decoration:none;">Download PDF →</a>
+          <a href="Tyler_Hoback_Resume_2026.pdf" class="case-study-link" style="text-decoration:none;">Download PDF →</a>
         </div>
       </div>
     </div>
@@ -544,7 +584,7 @@
         <a href="mailto:hello@tylerhoback.com" class="contact-link">
           hello@tylerhoback.com →
         </a>
-        <a href="https://linkedin.com/in/tylerhoback" class="contact-link" target="_blank">
+        <a href="https://www.linkedin.com/in/tylerhoback/" class="contact-link" target="_blank">
           LinkedIn →
         </a>
         <a href="https://read.cv/tylerhoback" class="contact-link" target="_blank">
@@ -564,6 +604,33 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 20);
     });
+
+    (function () {
+      const KEY = 'work_unlocked';
+      const PWD = '062695';
+
+      function unlock() {
+        document.getElementById('work-gate').style.display = 'none';
+        document.getElementById('work-content').style.display = 'flex';
+      }
+
+      if (localStorage.getItem(KEY) === '1') unlock();
+
+      document.getElementById('work-gate-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const input = document.getElementById('work-gate-input');
+        if (input.value === PWD) {
+          localStorage.setItem(KEY, '1');
+          unlock();
+        } else {
+          const err = document.getElementById('work-gate-error');
+          err.classList.add('visible');
+          input.value = '';
+          input.focus();
+          setTimeout(() => err.classList.remove('visible'), 2000);
+        }
+      });
+    })();
   </script>
 
 </body>
